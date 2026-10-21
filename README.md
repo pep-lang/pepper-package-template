@@ -51,7 +51,9 @@ runs the `[Test]` functions in `tests/` with `pepper test`.
 ## Releasing
 
 CI (`.github/workflows/ci.yml`) runs the tests on Linux, macOS and
-Windows for every push to `main` and every pull request. To release, set
+Windows for every push to `main` and every pull request, and, when
+`pep.toml` sets `minimum_toolchain`, on Linux with that toolchain too, so
+the minimum it states stays true. To release, set
 `version` in `pep.toml`, merge, then push the matching tag
 (`git tag v1.0.0 && git push origin v1.0.0`): CI tests the tag and
 publishes a GitHub release for it. `pepper package add` and `pepper
