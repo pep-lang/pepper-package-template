@@ -46,7 +46,9 @@ this repository on the import path: `pepper build -I packages main.pep`.
 tests/run.sh path/to/pepper
 ```
 
-runs the `[Test]` functions in `tests/` with `pepper test`.
+runs the `[Test]` functions in `tests/` with `pepper test`. A package only
+the tests use goes in `[dev-dependencies]` (`pepper package add --dev
+OWNER/name`): projects that depend on this one do not fetch it.
 
 ## Releasing
 
