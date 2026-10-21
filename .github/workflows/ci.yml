@@ -49,6 +49,11 @@ jobs:
 
       - name: Test
         shell: bash
+        # Fail when pep.lock is out of date with pep.toml, rather than build
+        # what a fresh resolve picks. The variable, not `--locked`: a
+        # toolchain without the option ignores it.
+        env:
+          PEPPER_LOCKED: '1'
         run: bash tests/run.sh
 
   # Tests with the toolchain pep.toml's `minimum_toolchain` names, so the
@@ -82,6 +87,7 @@ jobs:
         # Over any `toolchain` in pep.toml.
         env:
           PEPPER_TOOLCHAIN: ${{ steps.minimum.outputs.version }}
+          PEPPER_LOCKED: '1'
         run: bash tests/run.sh
 
   release:
