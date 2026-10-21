@@ -1,5 +1,11 @@
 # Using this template
 
+`pepper new <name> --lib` writes these same files with the name filled in
+(and `--license` picks the license), leaving only `OWNER` of step 2.
+pep-new holds them in pep-lang/pepper's `tools/pep-new/template.pep`, and
+`.github/workflows/template.yml` checks the two match, so a change here goes
+there too.
+
 1. Create the repository from this template, named `pepper-<name>`.
 2. Replace the placeholders: `mypkg` (the module name, also the folder
    name on the import path) and `OWNER` (the GitHub owner):
@@ -21,4 +27,4 @@
 6. Release: set `version` in `pep.toml`, merge, then push the tag
    `vX.Y.Z` matching it. CI tests the tag and publishes the release; a tag
    that does not match `pep.toml` fails.
-7. Delete this file.
+7. Delete this file and `.github/workflows/template.yml`.
