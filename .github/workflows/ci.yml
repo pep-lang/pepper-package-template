@@ -119,6 +119,10 @@ jobs:
   # turned on for that branch (Settings, Pages).
   docs:
     needs: release
+    # One at a time, so two tags pushed together both reach gh-pages.
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
