@@ -1,5 +1,6 @@
 # Tests the package on each push to main and each pull request, and on a
-# vX.Y.Z tag also publishes a GitHub release for that tag. Runs on
+# vX.Y.Z tag also publishes a GitHub release for that tag and its
+# reference on the gh-pages branch, for GitHub Pages. Runs on
 # GitHub-hosted runners with the newest published Pepper toolchain,
 # installed with pep-lang/pepper's install scripts as a user installs it.
 #
@@ -112,3 +113,47 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes --verify-tag
+
+  # Adds the release's reference (`pepper doc package`) to the gh-pages
+  # branch, a folder per version, which GitHub Pages serves once it is
+  # turned on for that branch (Settings, Pages).
+  docs:
+    needs: release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Pepper and mdBook
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MDBOOK_VERSION: v0.4.52
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/pep-lang/pepper/main/scripts/install.sh | sh
+          echo "$HOME/.pepper/bin" >> "$GITHUB_PATH"
+          mkdir -p "$RUNNER_TEMP/mdbook"
+          curl -fsSL "https://github.com/rust-lang/mdBook/releases/download/$MDBOOK_VERSION/mdbook-$MDBOOK_VERSION-x86_64-unknown-linux-gnu.tar.gz" | tar -xz -C "$RUNNER_TEMP/mdbook"
+          echo "$RUNNER_TEMP/mdbook" >> "$GITHUB_PATH"
+
+      - name: Publish the reference
+        run: |
+          set -euo pipefail
+          # grep reads it all: with -q, pipefail could fail on pepper's broken pipe.
+          if ! pepper doc help | grep '^  package ' >/dev/null; then
+            echo "this toolchain's pep-doc has no 'package': nothing to publish"
+            exit 0
+          fi
+          site="$RUNNER_TEMP/site"
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git fetch --depth 1 origin gh-pages
+            git worktree add --detach "$site" FETCH_HEAD
+          else
+            git worktree add --orphan -b gh-pages "$site"
+          fi
+          pepper doc package --site "$site"
+          git -C "$site" add -A
+          git -C "$site" -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -m "Reference for $GITHUB_REF_NAME"
+          git -C "$site" push origin HEAD:gh-pages

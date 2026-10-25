@@ -26,5 +26,7 @@ there too.
    `examples/<name>/main.pep`, and data files under `tests/`.
 6. Release: set `version` in `pep.toml`, merge, then push the tag
    `vX.Y.Z` matching it. CI tests the tag and publishes the release; a tag
-   that does not match `pep.toml` fails.
+   that does not match `pep.toml` fails. Turn on GitHub Pages for the
+   `gh-pages` branch the first release makes (Settings, Pages), which then
+   serves each release's reference.
 7. Delete this file and `.github/workflows/template.yml`.
