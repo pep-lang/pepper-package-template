@@ -9,3 +9,8 @@ repository = "https://github.com/OWNER/pepper-mypkg"
 # user's toolchain. Toolchains before 0.11 reject the key, so set it only
 # once the package needs 0.11 or later.
 # minimum_toolchain = "0.11.0"
+
+# To compile and link C code, uncomment these two lines and set
+# `minimum_toolchain` to "0.11.0": native/build.pep is the example.
+# [build]
+# script = "native/build.pep"

@@ -1,5 +1,5 @@
 # Checks that this template is what `pepper new --lib` writes: pep-new
-# (pep-lang/pepper's tools/pep-new/template.pep) holds these files word for
+# (pep-lang/pepper's tools/scaffold/template.pep) holds these files word for
 # word, so a change here goes there too, and the other way round. Runs with
 # the build of pep-lang/pepper's main, so it sees a change there as soon as
 # it is published. This file and TEMPLATE.md are the template's own and are
