@@ -145,11 +145,6 @@ jobs:
       - name: Publish the reference
         run: |
           set -euo pipefail
-          # grep reads it all: with -q, pipefail could fail on pepper's broken pipe.
-          if ! pepper doc help | grep '^  package ' >/dev/null; then
-            echo "this toolchain's pep-doc has no 'package': nothing to publish"
-            exit 0
-          fi
           site="$RUNNER_TEMP/site"
           if git ls-remote --exit-code --heads origin gh-pages; then
             git fetch --depth 1 origin gh-pages
@@ -159,5 +154,7 @@ jobs:
           fi
           pepper doc package --site "$site"
           git -C "$site" add -A
+          # A re-run for a tag already published has nothing to commit.
+          git -C "$site" diff --cached --quiet && exit 0
           git -C "$site" -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -m "Reference for $GITHUB_REF_NAME"
           git -C "$site" push origin HEAD:gh-pages
