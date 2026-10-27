@@ -42,6 +42,8 @@ mypkg = { github = "OWNER/pepper-mypkg" }
 
 Without a project, put a folder named `mypkg` that holds (or links to)
 this repository on the import path: `pepper build -I packages main.pep`.
+That builds no C, though: a package with a `[native]` table in its
+`pep.toml` must be a dependency.
 
 ## Tests
 
