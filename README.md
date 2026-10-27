@@ -1,7 +1,8 @@
 # pepper-mypkg
 
 One paragraph for [Pepper](https://github.com/pep-lang/pepper): what the
-package does and why someone would use it.
+package does and why someone would use it. Its reference:
+<https://OWNER.github.io/pepper-mypkg/>.
 
 One module, **`mypkg`**:
 
@@ -60,9 +61,12 @@ same as `pepper test --locked`: a `pep.lock` out of date with `pep.toml`
 fails the run, so commit `pep.lock` after changing a dependency. To
 release, set
 `version` in `pep.toml`, merge, then push the matching tag
-(`git tag v1.0.0 && git push origin v1.0.0`): CI tests the tag and
-publishes a GitHub release for it. `pepper package add` and `pepper
-package update` find versions by their tags.
+(`git tag v1.0.0 && git push origin v1.0.0`): CI tests the tag,
+publishes a GitHub release for it, and adds its reference (`pepper doc
+package`, from the `##` doc comments) to the `gh-pages` branch, which
+GitHub Pages serves once it is turned on for that branch (Settings,
+Pages). `pepper package add` and `pepper package update` find versions by
+their tags.
 
 ## License
 
