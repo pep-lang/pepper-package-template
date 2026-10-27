@@ -15,6 +15,8 @@
 
 # This file only gathers the module's public API from its other files.
 
+import "add";
 import "greet";
 
+export add;
 export greet;

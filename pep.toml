@@ -4,13 +4,14 @@ version = "0.1.0"
 description = "One line saying what the package does"
 license = "Apache-2.0"
 repository = "https://github.com/OWNER/pepper-mypkg"
-# The oldest Pepper toolchain that builds the package: CI also tests with
-# it, and `pepper package` skips a version whose minimum is newer than the
-# user's toolchain. Toolchains before 0.11 reject the key, so set it only
-# once the package needs 0.11 or later.
-# minimum_toolchain = "0.11.0"
+# The oldest Pepper toolchain that builds the package (0.11 added
+# `[native]`): CI also tests with it, and `pepper package` skips a version
+# whose minimum is newer than the user's toolchain.
+minimum_toolchain = "0.11.0"
 
-# To compile and link C code, uncomment these two lines and set
-# `minimum_toolchain` to "0.11.0": native/build.pep is the example.
-# [build]
-# script = "native/build.pep"
+# C code the build compiles and links into every program that uses the
+# package: native/add.c is the example, which add.pep calls. A package
+# with none deletes this table, native/, add.pep, tests/add_test.pep and
+# `add` in module.pep.
+[native]
+sources = ["native/*.c"]

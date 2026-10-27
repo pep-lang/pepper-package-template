@@ -24,11 +24,11 @@ there too.
    what it holds.
 5. Add anything `tests/run.sh` should also build or run, such as an
    `examples/<name>/main.pep`, and data files under `tests/`.
-6. C code: `native/build.pep` is an example build script, which compiles
-   `native/add.c` for the build's target and links it. It is not wired in,
-   since Pepper before 0.11 has no build scripts and CI builds with the
-   newest stable one. To use it, uncomment `[build]` in `pep.toml` and set
-   `minimum_toolchain = "0.11.0"`; otherwise delete `native/`.
+6. C code: the `[native]` table in `pep.toml` compiles `native/*.c` for
+   the build's target and links it, and `add.pep` calls it. Put the
+   package's own C there (more keys, such as `include` and `link`, are in
+   Pepper's projects page), or, with none, delete what the comment above
+   `[native]` names.
 7. Release: set `version` in `pep.toml`, merge, then push the tag
    `vX.Y.Z` matching it. CI tests the tag and publishes the release; a tag
    that does not match `pep.toml` fails. Turn on GitHub Pages for the

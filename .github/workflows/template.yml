@@ -36,9 +36,5 @@ jobs:
       - name: Compare with pepper new
         run: |
           set -euo pipefail
-          if ! pepper new --help >/dev/null 2>&1; then
-            echo "this toolchain has no 'pepper new': nothing to compare"
-            exit 0
-          fi
           pepper new "$RUNNER_TEMP/mypkg" --lib --license Apache-2.0
           diff -r --exclude=.git --exclude=TEMPLATE.md --exclude=template.yml . "$RUNNER_TEMP/mypkg"

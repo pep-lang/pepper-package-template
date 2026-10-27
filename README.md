@@ -7,6 +7,8 @@ package does and why someone would use it. Its reference:
 One module, **`mypkg`**:
 
 - **`mypkg.greet(name)`** returns a greeting for `name`.
+- **`mypkg.add(a, b)`** returns `a + b`, computed in C (`native/add.c`,
+  which the `[native]` table in `pep.toml` compiles and links).
 
 ```pepper
 import mypkg;
@@ -40,6 +42,8 @@ mypkg = { github = "OWNER/pepper-mypkg" }
 
 Without a project, put a folder named `mypkg` that holds (or links to)
 this repository on the import path: `pepper build -I packages main.pep`.
+That builds no C, though: a package with a `[native]` table in its
+`pep.toml` must be a dependency.
 
 ## Tests
 
