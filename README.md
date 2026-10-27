@@ -7,6 +7,8 @@ package does and why someone would use it. Its reference:
 One module, **`mypkg`**:
 
 - **`mypkg.greet(name)`** returns a greeting for `name`.
+- **`mypkg.add(a, b)`** returns `a + b`, computed in C (`native/add.c`,
+  which the `[native]` table in `pep.toml` compiles and links).
 
 ```pepper
 import mypkg;
